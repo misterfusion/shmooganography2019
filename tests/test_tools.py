@@ -77,4 +77,4 @@ class TestTools(unittest.TestCase):
         value = tools.binary2base64('tests/sample-files/free-software-song.ogg')
         self.assertEqual(expected_value, value)
 
-  			  	
+  		    
