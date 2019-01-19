@@ -107,4 +107,4 @@ if __name__ == '__main__':
         img = Image.open(options.input_image_file)
         print(reveal(img))
 
-  		    
+  		   	
