@@ -25,6 +25,7 @@ __date__ = "$Date: 2010/10/01 $"
 __license__ = "GPLv3"
 
 import base64
+from functools import reduce
 
 def a2bits(chars):
     """
@@ -107,4 +108,4 @@ def base642binary(b64_fname):
     #fin.close()
     # Decode base64 string to original binary sound object
     return base64.b64decode(b64_fname)
-  			  	
+  		    

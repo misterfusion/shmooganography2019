@@ -43,15 +43,15 @@ def steganalyse(img):
             colours[r] += 1
 
     most_common = colours.most_common(10)
-    dict_colours = OrderedDict(sorted(colours.items(), key=lambda t: t[1]))
+    dict_colours = OrderedDict(sorted(list(colours.items()), key=lambda t: t[1]))
 
     colours = 0
-    for colour in dict_colours.keys():
+    for colour in list(dict_colours.keys()):
         colours += colour
     colours = colours / len(dict_colours)
 
     #return colours.most_common(10)
-    return dict_colours.keys()[:30], most_common
+    return list(dict_colours.keys())[:30], most_common
 
 if __name__ == '__main__':
     # Point of entry in execution mode.
@@ -68,4 +68,4 @@ if __name__ == '__main__':
     input_image_file = Image.open(options.input_image_file)
     output_image = steganalyse(input_image_file)
     soutput_image.save(options.output_image_file)
-  			  	
+  		    
