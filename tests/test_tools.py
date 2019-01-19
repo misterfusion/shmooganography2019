@@ -37,7 +37,7 @@ class TestTools(unittest.TestCase):
         bits = tools.a2bits("Hello World!")
         self.assertEqual(bits, '010010000110010101101100011011000110111100100000010101110110111101110010011011000110010000100001')
 
-    def test_a2bits_list(self):
+    def test_a2bits_list_UTF8(self):
         list_of_bits = tools.a2bits_list("Hello World!")
         self.assertEqual(list_of_bits, ['01001000',
                                         '01100101',
@@ -51,6 +51,21 @@ class TestTools(unittest.TestCase):
                                         '01101100',
                                         '01100100',
                                         '00100001'])
+
+    def test_a2bits_list_UTF32LE(self):
+        list_of_bits = tools.a2bits_list("Hello World!", 'UTF-32LE')
+        self.assertEqual(list_of_bits, ['00000000000000000000000001001000',
+                                        '00000000000000000000000001100101',
+                                        '00000000000000000000000001101100',
+                                        '00000000000000000000000001101100',
+                                        '00000000000000000000000001101111',
+                                        '00000000000000000000000000100000',
+                                        '00000000000000000000000001010111',
+                                        '00000000000000000000000001101111',
+                                        '00000000000000000000000001110010',
+                                        '00000000000000000000000001101100',
+                                        '00000000000000000000000001100100',
+                                        '00000000000000000000000000100001'])
 
     def test_n_at_a_time(self):
         result = tools.n_at_a_time([1, 2, 3, 4, 5], 2, 'X')
@@ -5795,4 +5810,4 @@ yypk6ZynBeicC27u/yE9KYa5ShXrxsf9jEsm6AZhoN9m9Ekot5Y6jgCS"""
         value = tools.binary2base64('tests/sample-files/free-software-song.ogg')
         self.assertEqual(expected_value, value)
 
-  		   	
+  		  	 
