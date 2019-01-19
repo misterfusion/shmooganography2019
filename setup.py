@@ -6,7 +6,7 @@ import os
 
 setup(
     name='Stegano',
-    version='0.2',
+    version='0.3',
     author='Cédric Bonhomme',
     author_email='kimble.mandel@gmail.com',
     packages=['stegano'],
@@ -17,4 +17,4 @@ setup(
     description='A Python Steganography module.',
 )
 
-  		  		
+  			  	
