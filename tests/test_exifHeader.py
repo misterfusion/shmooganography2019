@@ -63,6 +63,17 @@ class TestEXIFHeader(unittest.TestCase):
 
         self.assertEqual(b"", clear_message)
 
+    def test_with_text_file(self):
+        text_file_to_hide = "./tests/sample-files/lorem_ipsum.txt"
+        with open(text_file_to_hide, "rb") as f:
+            message = f.read()
+        secret = exifHeader.hide("./tests/sample-files/Elisha-Cuthbert.jpg",
+                            img_enc="./image.jpg",
+                            secret_file=text_file_to_hide)
+
+        clear_message = exifHeader.reveal("./image.jpg")
+        self.assertEqual(message, clear_message)
+
     def test_with_png_image(self):
         secret = exifHeader.hide("./tests/sample-files/Lenna.png",
                                 "./image.png", secret_message="Secret")
@@ -76,8 +87,12 @@ class TestEXIFHeader(unittest.TestCase):
             os.unlink("./image.jpg")
         except:
             pass
+        try:
+            os.unlink("./image.png")
+        except:
+            pass
 
 if __name__ == '__main__':
     unittest.main()
 
-  		   	
+  		  	 
