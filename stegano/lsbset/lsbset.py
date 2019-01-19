@@ -117,4 +117,4 @@ def reveal(input_image_file, generator):
         if len(bitab)-len(str(limit))-1 == limit :
             return "".join(bitab)[len(str(limit))+1:]
 
-  		    
+  		   	
