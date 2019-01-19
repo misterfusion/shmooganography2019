@@ -19,42 +19,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-__author__ = "Cedric Bonhomme"
+__author__ = "Cédric Bonhomme"
 __version__ = "$Revision: 0.1 $"
-__date__ = "$Date: 2010/10/01 $"
+__date__ = "$Date: 2016/08/26 $"
+__revision__ "$Date: 2016/08/26 $"
 __license__ = "GPLv3"
+
+try:
+    from stegano.steganalysis import statistics
+except:
+    print("Install Stegano: sudo pip install Stegano")
 
 from PIL import Image
 
-def steganalyse(img):
-    """
-    Steganlysis of the LSB technique.
-    """
-    encoded = img.copy()
-    width, height = img.size
-    bits = ""
-    for row in range(height):
-        for col in range(width):
-            r, g, b = img.getpixel((col, row))
-            if r % 2 == 0:
-                r = 0
-            else:
-                r = 255
-            if g % 2 == 0:
-                g = 0
-            else:
-                g = 255
-            if b % 2 == 0:
-                b = 0
-            else:
-                b = 255
-            encoded.putpixel((col, row), (r, g , b))
-    return encoded
+import argparse
+parser = argparse.ArgumentParser(prog='steganalysis-parity')
+parser.add_argument("-i", "--input", dest="input_image_file",
+                help="Image file")
+parser.add_argument("-o", "--output", dest="output_image_file",
+                help="Image file")
+arguments = parser.parse_args()
 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
+input_image_file = Image.open(arguments.input_image_file)
+output_image = statistics.steganalyse(input_image_file)
+output_image.save(arguments.output_image_file)

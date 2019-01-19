@@ -20,8 +20,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 __author__ = "Cedric Bonhomme"
-__version__ = "$Revision: 0.1 $"
+__version__ = "$Revision: 0.2 $"
 __date__ = "$Date: 2010/10/01 $"
+__revision__ "$Date: 2016/08/26 $"
 __license__ = "GPLv3"
 
 import operator
@@ -53,18 +54,4 @@ def steganalyse(img):
     #return colours.most_common(10)
     return list(dict_colours.keys())[:30], most_common
 
-if __name__ == '__main__':
-    # Point of entry in execution mode.
-    import argparse
-    parser = argparse.ArgumentParser(prog='steganalysis-statistics')
-    parser.add_argument("-i", "--input", dest="input_image_file",
-                    help="Image file.")
-    parser.add_argument("-o", "--output", dest="output_image_file",
-                    help="Image file.")
-    arguments = parser.parse_args()
-
-    input_image_file = Image.open(arguments.input_image_file)
-    output_image = steganalyse(input_image_file)
-    soutput_image.save(arguments.output_image_file)
-
-  		    
+  		   	
