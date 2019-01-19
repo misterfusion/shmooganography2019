@@ -85,15 +85,4 @@ def reveal(input_image_file):
     img.close()
     return message
 
-def write(image, output_image_file):
-    """
-    """
-    try:
-        image.save(output_image_file)
-    except Exception as e:
-        # If hide() returns an error (Too long message).
-        print(e)
-    finally:
-        image.close()
-
-  		   	
+  		  	 

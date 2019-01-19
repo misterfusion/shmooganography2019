@@ -121,10 +121,4 @@ def reveal(input_image_file, generator):
 
     return ""
 
-def write(image, output_image_file):
-    try:
-        image.save(output_image_file)
-    except Exception as e:
-        print(e)
-
-  		   	
+  		  	 
