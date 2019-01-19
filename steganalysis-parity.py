@@ -52,7 +52,7 @@ def steganalyse(img):
     return encoded
 
 if __name__ == '__main__':
-    # Point of entry in execution mode
+    # Point of entry in execution mode.
     from optparse import OptionParser
     parser = OptionParser()
     parser.add_option("-i", "--input", dest="input_image_file",
@@ -66,4 +66,4 @@ if __name__ == '__main__':
     input_image_file = Image.open(options.input_image_file)
     output_image = steganalyse(input_image_file)
     output_image.save(options.output_image_file)
-  		  	 
+  		 		 
