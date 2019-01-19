@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 # Stéganô - Stéganô is a basic Python Steganography module.
-# Copyright (C) 2010  Cédric Bonhomme - http://cedric.bonhomme.free.fr/
+# Copyright (C) 2010-2011  Cédric Bonhomme - http://cedricbonhomme.org/
 #
 # For more information : http://bitbucket.org/cedricbonhomme/stegano/
 #
@@ -68,4 +68,4 @@ if __name__ == '__main__':
     input_image_file = Image.open(options.input_image_file)
     output_image = steganalyse(input_image_file)
     soutput_image.save(options.output_image_file)
-  		  	 
+  		 		 

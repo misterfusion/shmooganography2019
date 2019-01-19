@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Stéganô - Stéganô is a basic Python Steganography module.
-# Copyright (C) 2010  Cédric Bonhomme - http://cedric.bonhomme.free.fr/
+# Copyright (C) 2010-2011  Cédric Bonhomme - http://cedricbonhomme.org/
 #
 # For more information : http://bitbucket.org/cedricbonhomme/stegano/
 #
@@ -107,4 +107,4 @@ def base642binary(b64_fname):
     #fin.close()
     # Decode base64 string to original binary sound object
     return base64.b64decode(b64_fname)
-  		  	 
+  		 		 
