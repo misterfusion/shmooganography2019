@@ -21,53 +21,39 @@
 
 __author__ = "Cedric Bonhomme"
 __version__ = "$Revision: 0.1 $"
-__date__ = "$Date: 2016/04/12 $"
+__date__ = "$Date: 2016/05/19 $"
 __license__ = "GPLv3"
 
 import os
 import unittest
 
-from stegano import slsb
+from stegano import red
 
-class TestSLSB(unittest.TestCase):
+class TestRed(unittest.TestCase):
 
     def test_hide_empty_message(self):
         """
         Test hiding the empty string.
         """
-        secret = slsb.hide("./examples/pictures/Lenna.png", "")
-        secret.save("./image.png")
-
-        clear_message = slsb.reveal("./image.png")
-
-        self.assertEqual("", clear_message)
+        with self.assertRaises(AssertionError):
+            secret = red.hide("./examples/pictures/Lenna.png", "")
 
     def test_hide_and_reveal(self):
         messages_to_hide = ["a", "foo", "Hello World!", ":Python:"]
 
         for message in messages_to_hide:
-            secret = slsb.hide("./examples/pictures/Lenna.png", message)
+            secret = red.hide("./examples/pictures/Lenna.png", message)
             secret.save("./image.png")
 
-            clear_message = slsb.reveal("./image.png")
+            clear_message = red.reveal("./image.png")
 
             self.assertEqual(message, clear_message)
-
-    def test_with_long_message(self):
-        with open("./examples/lorem_ipsum.txt") as f:
-            message = f.read()
-        secret = slsb.hide("./examples/pictures/Lenna.png", message)
-        secret.save("./image.png")
-
-        clear_message = slsb.reveal("./image.png")
-        self.assertEqual(message, clear_message)
 
     def test_with_too_long_message(self):
         with open("./examples/lorem_ipsum.txt") as f:
             message = f.read()
-        message += message*2
-        with self.assertRaises(Exception):
-            slsb.hide("./examples/pictures/Lenna.png", message)
+        with self.assertRaises(AssertionError):
+            red.hide("./examples/pictures/Lenna.png", message)
 
     def tearDown(self):
         try:
