@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 # Stéganô - Stéganô is a basic Python Steganography module.
-# Copyright (C) 2010-2011  Cédric Bonhomme - http://cedricbonhomme.org/
+# Copyright (C) 2010-2016  Cédric Bonhomme - https://www.cedricbonhomme.org
 #
-# For more information : http://bitbucket.org/cedricbonhomme/stegano/
+# For more information : https://github.com/cedricbonhomme/Stegano
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ __author__ = "Cedric Bonhomme"
 __version__ = "$Revision: 0.1 $"
 __date__ = "$Date: 2010/10/01 $"
 __license__ = "GPLv3"
+
+import sys
 
 from PIL import Image
 
@@ -103,141 +105,6 @@ if __name__ == '__main__':
 
     elif sys.argv[1] == "reveal":
         img = Image.open(options.input_image_file)
-        print reveal(img)
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
+        print(reveal(img))
+
   		    
