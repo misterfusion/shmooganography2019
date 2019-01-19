@@ -54,4 +54,4 @@ def steganalyse(img):
     #return colours.most_common(10)
     return list(dict_colours.keys())[:30], most_common
 
-  		 	  
+  		   	
