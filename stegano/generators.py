@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Stéganô - Stéganô is a basic Python Steganography module.
-# Copyright (C) 2010-2011-2012  Cédric Bonhomme - http://cedricbonhomme.org/
+# Copyright (C) 2010-2013  Cédric Bonhomme - http://cedricbonhomme.org/
 #
 # For more information : http://bitbucket.org/cedricbonhomme/stegano/
 #
@@ -154,4 +154,4 @@ if __name__ == "__main__":
     for x in range(13):
         print f.next(), # 0 1 1 2 3 5 8 13 21 34 55 89 144
 
-  		 		 
+  		 	  
