@@ -89,7 +89,7 @@ def binary2base64(binary_file, output_file):
     fin.close()
 
     # Encode binary to base64 string (printable)
-    return b64_data = base64.b64encode(binary_data)
+    return  base64.b64encode(binary_data)
     
     """fout = open(output_file, "w")
     fout.write(b64_data)
@@ -105,4 +105,5 @@ def base642binary(b64_fname):
     fin.close()
     # Decode base64 string to original binary sound object
     return base64.b64decode(b64_str)
-  		 	  
+
+  		  		
