@@ -121,4 +121,4 @@ def reveal(input_image_file, generator):
 
     return ""
 
-  			  	
+  		    
