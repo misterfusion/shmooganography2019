@@ -17,4 +17,4 @@ setup(
     description='A Python Steganography module.',
 )
 
-  		 	  
+  		  		
