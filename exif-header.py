@@ -32,13 +32,14 @@ def hide(img, img_enc, copyright="http://bitbucket.org/cedricbonhomme/stegano"):
     """
     import shutil
     import datetime
+    from base64 import b64encode
     from exif.minimal_exif_writer import MinimalExifWriter
 
     file = open("lorem_ipsum.txt", "r")
     text = "\nImage annotation date: "
     text = text + str(datetime.date.today())
     text = text  + "\nImage description:\n"
-    text = text + file.read()
+    text = b64encode(text + file.read())
     file.close()
 
     try:
@@ -57,18 +58,19 @@ def hide(img, img_enc, copyright="http://bitbucket.org/cedricbonhomme/stegano"):
 def reveal(img):
     """
     """
+    from base64 import b64decode
     from exif.minimal_exif_reader import MinimalExifReader
     try:
         g = MinimalExifReader(img)
     except:
         print("Impossible to read description.")
         return
-    print(g.imageDescription())
-    print(("Copyright " + g.copyright()))
+    print(b64decode(g.imageDescription()))
+    print(("\nCopyright " + g.copyright()))
     #print g.dateTimeOriginal()s
 
 
 if __name__ == "__main__":
     hide(img='./pictures/Elisha-Cuthbert.jpg', img_enc='./pictures/Elisha-Cuthbert_enc.jpg')
     reveal(img='./pictures/Elisha-Cuthbert_enc.jpg')
-  		 	  
+  		  		
