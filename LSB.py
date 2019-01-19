@@ -118,3 +118,4 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
         img2 = Image.open(encoded_image_file)
         print reveal(img2)
   		  		
+  			  	
