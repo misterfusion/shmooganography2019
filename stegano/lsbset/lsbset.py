@@ -127,4 +127,4 @@ def write(image, output_image_file):
     except Exception as e:
         print(e)
 
-  		 	  
+  		   	
