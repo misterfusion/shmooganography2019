@@ -24,4 +24,4 @@ shutil.copymode("./bin/slsb-set", "/bin/slsb-set")
 
 shutil.copy2("./bin/slsb", "/bin/slsb")
 shutil.copymode("./bin/slsb", "/bin/slsb")
-  		  		
+  			  	
