@@ -96,4 +96,4 @@ def write(image, output_image_file):
     finally:
         image.close()
 
-  		    
+  		   	
