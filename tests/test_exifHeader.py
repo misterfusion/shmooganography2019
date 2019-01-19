@@ -21,53 +21,39 @@
 
 __author__ = "Cedric Bonhomme"
 __version__ = "$Revision: 0.1 $"
-__date__ = "$Date: 2016/04/12 $"
+__date__ = "$Date: 2016/05/17 $"
 __license__ = "GPLv3"
 
 import os
 import unittest
 
-from stegano import slsb
+from stegano import exifHeader
 
-class TestSLSB(unittest.TestCase):
+class TestEXIFHeader(unittest.TestCase):
 
     def test_hide_empty_message(self):
         """
         Test hiding the empty string.
         """
-        secret = slsb.hide("./examples/pictures/Lenna.png", "")
-        secret.save("./image.png")
+        secret = exifHeader.hide("./examples/pictures/Elisha-Cuthbert.jpg",
+                                "./image.png", copyright="", secret_message="")
+        #secret.save(""./image.png"")
 
-        clear_message = slsb.reveal("./image.png")
-
+        clear_message = exifHeader.reveal("./image.png")
+        #print(clear_message)
         self.assertEqual("", clear_message)
 
     def test_hide_and_reveal(self):
         messages_to_hide = ["a", "foo", "Hello World!", ":Python:"]
 
         for message in messages_to_hide:
-            secret = slsb.hide("./examples/pictures/Lenna.png", message)
-            secret.save("./image.png")
+            secret = exifHeader.hide("./examples/pictures/Elisha-Cuthbert.jpg",
+                                    "./image.png", copyright="",
+                                    secret_message=message)
 
-            clear_message = slsb.reveal("./image.png")
+            clear_message = exifHeader.reveal("./image.png")
 
             self.assertEqual(message, clear_message)
-
-    def test_with_long_message(self):
-        with open("./examples/lorem_ipsum.txt") as f:
-            message = f.read()
-        secret = slsb.hide("./examples/pictures/Lenna.png", message)
-        secret.save("./image.png")
-
-        clear_message = slsb.reveal("./image.png")
-        self.assertEqual(message, clear_message)
-
-    def test_with_too_long_message(self):
-        with open("./examples/lorem_ipsum.txt") as f:
-            message = f.read()
-        message += message*2
-        with self.assertRaises(Exception):
-            slsb.hide("./examples/pictures/Lenna.png", message)
 
     def tearDown(self):
         try:
