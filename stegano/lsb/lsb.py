@@ -2,9 +2,9 @@
 #-*- coding: utf-8 -*-
 
 # Stéganô - Stéganô is a basic Python Steganography module.
-# Copyright (C) 2010-2011  Cédric Bonhomme - http://cedricbonhomme.org/
+# Copyright (C) 2010-2016  Cédric Bonhomme - https://www.cedricbonhomme.org
 #
-# For more information : http://bitbucket.org/cedricbonhomme/stegano/
+# For more information : https://github.com/cedricbonhomme/Stegano
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,35 +20,51 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 __author__ = "Cedric Bonhomme"
-__version__ = "$Revision: 0.2 $"
-__date__ = "$Date: 2010/03/24 $"
+__version__ = "$Revision: 0.2.1 $"
+__date__ = "$Date: 2016/03/13 $"
 __license__ = "GPLv3"
 
 import sys
 
 from PIL import Image
 
-import tools
+from stegano import tools
 
-def hide(img, message):
+try:
+   input = raw_input
+except NameError:
+   pass
+
+def hide(input_image_file, message, auto_convert_rgb=False):
     """
     Hide a message (string) in an image with the
     LSB (Least Significant Bit) technique.
     """
+    img = Image.open(input_image_file)
+
+    if img.mode != 'RGB':
+        if not auto_convert_rgb:
+            print('The mode of the image is not RGB. Mode is {}'.format(img.mode))
+            answer = input('Convert the image to RGB ? [Y / n]\n') or 'Y'
+            if answer.lower() == 'n':
+                raise Exception('Not a RGB image.')
+        img = img.convert('RGB')
+
     encoded = img.copy()
     width, height = img.size
     index = 0
 
-    message = str(len(message)) + ":" + message
+    message = str(len(message)) + ":" + str(message)
     #message_bits = tools.a2bits(message)
     message_bits = "".join(tools.a2bits_list(message))
+    message_bits += '0' * ((3 - (len(message_bits) % 3)) % 3)
 
     npixels = width * height
     if len(message_bits) > npixels * 3:
-        return """Too long message (%s > %s).""" % (len(message_bits), npixels * 3)
+        raise Exception("""The message you want to hide is too long (%s > %s).""" % (len(message_bits), npixels * 3))
 
-    for row in xrange(height):
-        for col in xrange(width):
+    for row in range(height):
+        for col in range(width):
 
             if index + 3 <= len(message_bits) :
 
@@ -65,19 +81,21 @@ def hide(img, message):
 
             index += 3
 
+    img.close()
     return encoded
 
-def reveal(img):
+def reveal(input_image_file):
     """
     Find a message in an image
     (with the LSB technique).
     """
+    img = Image.open(input_image_file)
     width, height = img.size
     buff, count = 0, 0
     bitab = []
     limit = None
-    for row in xrange(height):
-        for col in xrange(width):
+    for row in range(height):
+        for col in range(width):
 
             # color = [r, g, b]
             for color in img.getpixel((col, row)):
@@ -93,8 +111,21 @@ def reveal(img):
                             pass
 
             if len(bitab)-len(str(limit))-1 == limit :
+                img.close()
                 return "".join(bitab)[len(str(limit))+1:]
+    img.close()
     return ""
+
+def write(image, output_image_file):
+    """
+    """
+    try:
+        image.save(output_image_file)
+    except Exception as e:
+        # If hide() returns an error (Too long message).
+        print(e)
+    finally:
+        image.close()
 
 if __name__ == '__main__':
     # Point of entry in execution mode.
@@ -135,162 +166,20 @@ if __name__ == '__main__':
         elif options.secret_message == "" and options.secret_file != "":
             secret = tools.binary2base64(options.secret_file)
 
-        img = Image.open(options.input_image_file)
-        img_encoded = hide(img, secret)
+        img_encoded = hide(options.input_image_file, secret)
         try:
             img_encoded.save(options.output_image_file)
-        except Exception, e:
+        except Exception as e:
             # If hide() returns an error (Too long message).
-            print e
+            print(e)
 
     elif options.reveal:
-        img = Image.open(options.input_image_file)
-        secret = reveal(img)
+        secret = reveal(options.input_image_file)
         if options.secret_binary != "":
             data = tools.base642binary(secret)
             with open(options.secret_binary, "w") as f:
                 f.write(data)
         else:
-            print secret
+            print(secret)
 
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
   		   	

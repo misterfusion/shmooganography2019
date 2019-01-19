@@ -2,9 +2,9 @@
 #-*- coding: utf-8 -*-
 
 # Stéganô - Stéganô is a basic Python Steganography module.
-# Copyright (C) 2010-2011  Cédric Bonhomme - http://cedricbonhomme.org/
+# Copyright (C) 2010-2016  Cédric Bonhomme - https://www.cedricbonhomme.org
 #
-# For more information : http://bitbucket.org/cedricbonhomme/stegano/
+# For more information : https://github.com/cedricbonhomme/Stegano
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,81 +20,118 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 __author__ = "Cedric Bonhomme"
-__version__ = "$Revision: 0.2 $"
-__date__ = "$Date: 2010/03/24 $"
+__version__ = "$Revision: 0.4.1 $"
+__date__ = "$Date: 2016/03/13 $"
 __license__ = "GPLv3"
 
 import sys
 
 from PIL import Image
 
-import tools
+from stegano import tools
+from . import generators
 
-def hide(img, message):
+try:
+   input = raw_input
+except NameError:
+   pass
+
+def hide(input_image_file, message, generator_function, auto_convert_rgb=False):
     """
     Hide a message (string) in an image with the
     LSB (Least Significant Bit) technique.
     """
-    encoded = img.copy()
+    img = Image.open(input_image_file)
+
+    if img.mode != 'RGB':
+        print('The mode of the image is not RGB. Mode is {}'.format(img.mode))
+        if not auto_convert_rgb:
+            answer = input('Convert the image to RGB ? [Y / n]\n') or 'Y'
+            if answer.lower() == 'n':
+                raise Exception('Not a RGB image.')
+
+        img = img.convert('RGB')
+
+    img_list = list(img.getdata())
     width, height = img.size
     index = 0
 
-    message = str(len(message)) + ":" + message
+    message = str(len(message)) + ":" + str(message)
     #message_bits = tools.a2bits(message)
     message_bits = "".join(tools.a2bits_list(message))
+    message_bits += '0' * ((3 - (len(message_bits) % 3)) % 3)
 
     npixels = width * height
     if len(message_bits) > npixels * 3:
-        return """Too long message (%s > %s).""" % (len(message_bits), npixels * 3)
+        raise Exception("""The message you want to hide is too long (%s > %s).""" % (len(message_bits), npixels * 3))
 
-    for row in xrange(height):
-        for col in xrange(width):
+    generator = getattr(generators, generator_function)()
 
-            if index + 3 <= len(message_bits) :
+    while index + 3 <= len(message_bits) :
+        generated_number = next(generator)
+        (r, g, b) = img_list[generated_number]
 
-                # Get the colour component.
-                (r, g, b) = img.getpixel((col, row))
+        # Change the Least Significant Bit of each colour component.
+        r = tools.setlsb(r, message_bits[index])
+        g = tools.setlsb(g, message_bits[index+1])
+        b = tools.setlsb(b, message_bits[index+2])
 
-                # Change the Least Significant Bit of each colour component.
-                r = tools.setlsb(r, message_bits[index])
-                g = tools.setlsb(g, message_bits[index+1])
-                b = tools.setlsb(b, message_bits[index+2])
+        # Save the new pixel
+        img_list[generated_number] = (r, g , b)
 
-                # Save the new pixel
-                encoded.putpixel((col, row), (r, g , b))
+        index += 3
 
-            index += 3
+    # create empty new image of appropriate format
+    encoded = Image.new('RGB', (img.size))
+
+    # insert saved data into the image
+    encoded.putdata(img_list)
 
     return encoded
 
-def reveal(img):
+
+
+def reveal(input_image_file, generator_function):
     """
     Find a message in an image
     (with the LSB technique).
     """
+    img = Image.open(input_image_file)
+    img_list = list(img.getdata())
     width, height = img.size
     buff, count = 0, 0
     bitab = []
     limit = None
-    for row in xrange(height):
-        for col in xrange(width):
 
-            # color = [r, g, b]
-            for color in img.getpixel((col, row)):
-                buff += (color&1)<<(7-count)
-                count += 1
-                if count == 8:
-                    bitab.append(chr(buff))
-                    buff, count = 0, 0
-                    if bitab[-1] == ":" and limit == None:
-                        try:
-                            limit = int("".join(bitab[:-1]))
-                        except:
-                            pass
+    generator = getattr(generators, generator_function)()
 
-            if len(bitab)-len(str(limit))-1 == limit :
-                return "".join(bitab)[len(str(limit))+1:]
+    while True:
+        generated_number = next(generator)
+        # color = [r, g, b]
+        for color in img_list[generated_number]:
+            buff += (color&1)<<(7-count)
+            count += 1
+            if count == 8:
+                bitab.append(chr(buff))
+                buff, count = 0, 0
+                if bitab[-1] == ":" and limit == None:
+                    try:
+                        limit = int("".join(bitab[:-1]))
+                    except:
+                        pass
+        if len(bitab)-len(str(limit))-1 == limit :
+            return "".join(bitab)[len(str(limit))+1:]
+
     return ""
+
+def write(image, output_image_file):
+    """
+    """
+    try:
+        image.save(output_image_file)
+    except Exception as e:
+        # If hide() returns an error (Too long message).
+        print(e)
 
 if __name__ == '__main__':
     # Point of entry in execution mode.
@@ -107,6 +144,11 @@ if __name__ == '__main__':
     # Original image
     parser.add_option("-i", "--input", dest="input_image_file",
                     help="Input image file.")
+
+    # Generator
+    parser.add_option("-g", "--generator", dest="generator_function",
+                    help="Generator")
+
     # Image containing the secret
     parser.add_option("-o", "--output", dest="output_image_file",
                     help="Output image containing the secret.")
@@ -123,6 +165,7 @@ if __name__ == '__main__':
                     help="Output for the binary secret (Text or any binary file).")
 
     parser.set_defaults(input_image_file = './pictures/Lenna.png',
+                        generator_function = 'fermat',
                         output_image_file = './pictures/Lenna_enc.png',
                         secret_message = '', secret_file = '', secret_binary = "")
 
@@ -135,162 +178,24 @@ if __name__ == '__main__':
         elif options.secret_message == "" and options.secret_file != "":
             secret = tools.binary2base64(options.secret_file)
 
-        img = Image.open(options.input_image_file)
-        img_encoded = hide(img, secret)
+        img_encoded = hide(options.input_image_file, secret, options.generator_function)
         try:
             img_encoded.save(options.output_image_file)
-        except Exception, e:
+        except Exception as e:
             # If hide() returns an error (Too long message).
-            print e
+            print(e)
 
     elif options.reveal:
-        img = Image.open(options.input_image_file)
-        secret = reveal(img)
+        try:
+            secret = reveal(options.input_image_file, options.generator_function)
+        except IndexError:
+            print("Impossible to detect message.")
+            exit(0)
         if options.secret_binary != "":
             data = tools.base642binary(secret)
             with open(options.secret_binary, "w") as f:
                 f.write(data)
         else:
-            print secret
+            print(secret)
 
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
   		   	
