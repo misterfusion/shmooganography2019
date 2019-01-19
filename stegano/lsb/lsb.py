@@ -123,4 +123,4 @@ def reveal(input_image_file, encoding='UTF-8'):
                 img.close()
                 return "".join(bitab)[len(str(limit))+1:]
 
-  		    
+  		   	
