@@ -30,11 +30,6 @@ from PIL import Image
 
 from stegano import tools
 
-try:
-   input = raw_input
-except NameError:
-   pass
-
 def hide(input_image_file, message, auto_convert_rgb=False):
     """Hide a message (string) in an image with the
     LSB (Least Significant Bit) technique.
@@ -140,4 +135,4 @@ def write(image, output_image_file):
     finally:
         image.close()
 
-  		    
+  		   	
