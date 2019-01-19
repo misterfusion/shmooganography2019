@@ -1,4 +1,4 @@
-#! /usr/local/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # Stéganô - Stéganô is a basic Python Steganography module.
@@ -104,4 +104,4 @@ if __name__ == '__main__':
     elif sys.argv[1] == "reveal":
         img = Image.open(options.input_image_file)
         print reveal(img)
-  			  	
+  		    
