@@ -28,7 +28,7 @@ def hide(img, message):
 
                 (r, g, b) = img.getpixel((col, row))
                     
-                # Convert in to bits
+                # Convert int to bits
                 r_bits = tools.bs(r)
                 g_bits = tools.bs(g)
                 b_bits = tools.bs(b)
@@ -97,4 +97,4 @@ if __name__ == '__main__':
         # Test it
         img2 = Image.open(encoded_image_file)
         print reveal(img2)
-  		  	 
+  		 		 
