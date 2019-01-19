@@ -5810,4 +5810,4 @@ yypk6ZynBeicC27u/yE9KYa5ShXrxsf9jEsm6AZhoN9m9Ekot5Y6jgCS"""
         value = tools.binary2base64('tests/sample-files/free-software-song.ogg')
         self.assertEqual(expected_value, value)
 
-  		    
+  		   	
