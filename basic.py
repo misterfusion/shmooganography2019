@@ -104,4 +104,4 @@ if __name__ == '__main__':
     elif sys.argv[1] == "reveal":
         img = Image.open(options.input_image_file)
         print reveal(img)
-  		   	
+  		  	 
