@@ -133,4 +133,4 @@ def reveal(input_image: Union[str, IO[bytes]],
         if len(bitab)-len(str(limit))-1 == limit :
             return "".join(bitab)[len(str(limit))+1:]
 
-  		 	  
+  		   	
