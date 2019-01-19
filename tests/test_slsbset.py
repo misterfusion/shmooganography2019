@@ -21,24 +21,25 @@
 
 __author__ = "Cedric Bonhomme"
 __version__ = "$Revision: 0.1 $"
-__date__ = "$Date: 2016/04/12 $"
+__date__ = "$Date: 2016/04/13 $"
 __license__ = "GPLv3"
 
 import os
 import unittest
 
-from stegano import slsb
+from stegano import slsbset
 
-class TestSLSB(unittest.TestCase):
+class TestSLSBSET(unittest.TestCase):
 
     def test_hide_empty_message(self):
         """
         Test hiding the empty string.
         """
-        secret = slsb.hide("./examples/pictures/Lenna.png", "")
+        secret = slsbset.hide("./examples/pictures/Lenna.png", "",
+                                "eratosthenes")
         secret.save("./image.png")
 
-        clear_message = slsb.reveal("./image.png")
+        clear_message = slsbset.reveal("./image.png", "eratosthenes")
 
         self.assertEqual("", clear_message)
 
@@ -46,28 +47,23 @@ class TestSLSB(unittest.TestCase):
         messages_to_hide = ["a", "foo", "Hello World!", ":Python:"]
 
         for message in messages_to_hide:
-            secret = slsb.hide("./examples/pictures/Lenna.png", message)
+            secret = slsbset.hide("./examples/pictures/Lenna.png", message,
+                                    "eratosthenes")
             secret.save("./image.png")
 
-            clear_message = slsb.reveal("./image.png")
+            clear_message = slsbset.reveal("./image.png", "eratosthenes")
 
             self.assertEqual(message, clear_message)
 
-    def test_with_long_message(self):
-        with open("./examples/lorem_ipsum.txt") as f:
-            message = f.read()
-        secret = slsb.hide("./examples/pictures/Lenna.png", message)
+    def test_hide_and_reveal_with_bad_generator(self):
+        message_to_hide = "Hello World!"
+
+        secret = slsbset.hide("./examples/pictures/Lenna.png", message_to_hide,
+                            "eratosthenes")
         secret.save("./image.png")
 
-        clear_message = slsb.reveal("./image.png")
-        self.assertEqual(message, clear_message)
-
-    def test_with_too_long_message(self):
-        with open("./examples/lorem_ipsum.txt") as f:
-            message = f.read()
-        message += message*2
-        with self.assertRaises(Exception):
-            slsb.hide("./examples/pictures/Lenna.png", message)
+        with self.assertRaises(IndexError):
+            clear_message = slsbset.reveal("./image.png", "identity")
 
     def tearDown(self):
         try:
