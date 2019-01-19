@@ -86,4 +86,4 @@ def reveal(input_image: Union[str, IO[bytes]]):
     img.close()
     return message
 
-  		   	
+  		 	  
