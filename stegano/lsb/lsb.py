@@ -121,4 +121,4 @@ def reveal(input_image_file):
                 img.close()
                 return "".join(bitab)[len(str(limit))+1:]
 
-  		 	  
+  		  		

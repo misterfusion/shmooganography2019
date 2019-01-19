@@ -56,4 +56,4 @@ class TestTools(unittest.TestCase):
         result = tools.n_at_a_time([1, 2, 3, 4, 5], 2, 'X')
         self.assertEqual(list(result), [(1, 2), (3, 4), (5, 'X')])
 
-  		 	  
+  		  		
