@@ -47,4 +47,4 @@ if __name__ == '__main__':
 
     img_original_image_steganalysde.save(original_image_file_steganalysed)
     img_encoded_image_steganalysed.save(encoded_image_file_steganalysed)
-  			  	
+  		    

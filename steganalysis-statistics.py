@@ -54,4 +54,4 @@ if __name__ == '__main__':
     print steganalyse(img_original_image_file_steganalysed)
     print
     print steganalyse(img_encoded_image_file_steganalysed)
-  			  	
+  		    
