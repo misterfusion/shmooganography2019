@@ -3,6 +3,7 @@
 __author__ = "Cedric Bonhomme"
 __version__ = "$Revision: 0.1 $"
 __date__ = "$Date: 2010/10/01 $"
+__license__ = "GPLv3"
 
 from PIL import Image
 
@@ -85,4 +86,4 @@ if __name__ == '__main__':
     elif sys.argv[1] == "reveal":
         img = Image.open(options.input_image_file)
         print reveal(img)
-  		 	  
+  		   	

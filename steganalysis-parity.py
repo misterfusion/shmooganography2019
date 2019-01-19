@@ -4,6 +4,7 @@
 __author__ = "Cedric Bonhomme"
 __version__ = "$Revision: 0.1 $"
 __date__ = "$Date: 2010/10/01 $"
+__license__ = "GPLv3"
 
 from PIL import Image
 
@@ -47,4 +48,4 @@ if __name__ == '__main__':
     input_image_file = Image.open(options.input_image_file)
     output_image = steganalyse(input_image_file)
     output_image.save(options.output_image_file)
-  		 	  
+  		   	
