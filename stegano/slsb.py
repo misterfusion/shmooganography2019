@@ -21,7 +21,7 @@
 
 __author__ = "Cedric Bonhomme"
 __version__ = "$Revision: 0.2.1 $"
-__date__ = "$Date: 2016/03/12 $"
+__date__ = "$Date: 2016/03/13 $"
 __license__ = "GPLv3"
 
 import sys
@@ -177,4 +177,4 @@ if __name__ == '__main__':
         else:
             print(secret)
 
-  		   	
+  		  	 
