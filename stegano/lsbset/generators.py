@@ -145,4 +145,4 @@ def log_gen() -> Iterator[int]:
         yield int(y)
         y = y + int(adder)
 
-  		 		 
+  		 	  
