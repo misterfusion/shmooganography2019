@@ -66,4 +66,4 @@ if __name__ == '__main__':
     input_image_file = Image.open(options.input_image_file)
     output_image = steganalyse(input_image_file)
     output_image.save(options.output_image_file)
-  		    
+  		   	
