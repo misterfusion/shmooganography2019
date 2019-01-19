@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 # Stéganô - Stéganô is a basic Python Steganography module.
-# Copyright (C) 2010-2016  Cédric Bonhomme - https://www.cedricbonhomme.org
+# Copyright (C) 2010-2017  Cédric Bonhomme - https://www.cedricbonhomme.org
 #
 # For more information : https://github.com/cedricbonhomme/Stegano
 #
@@ -133,4 +133,4 @@ def write(image, output_image_file):
         # If hide() returns an error (Too long message).
         print(e)
 
-  		 		 
+  		 	  

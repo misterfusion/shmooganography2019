@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 # Stéganô - Stéganô is a basic Python Steganography module.
-# Copyright (C) 2010-2016  Cédric Bonhomme - https://www.cedricbonhomme.org
+# Copyright (C) 2010-2017  Cédric Bonhomme - https://www.cedricbonhomme.org
 #
 # For more information : https://github.com/cedricbonhomme/Stegano
 #
@@ -54,4 +54,4 @@ def steganalyse(img):
     #return colours.most_common(10)
     return list(dict_colours.keys())[:30], most_common
 
-  		 		 
+  		 	  
