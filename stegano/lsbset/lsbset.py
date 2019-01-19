@@ -20,9 +20,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 __author__ = "Cedric Bonhomme"
-__version__ = "$Revision: 0.4.2 $"
+__version__ = "$Revision: 0.5 $"
 __date__ = "$Date: 2016/03/13 $"
-__revision__ = "$Date: 2016/05/22 $"
+__revision__ = "$Date: 2017/05/04 $"
 __license__ = "GPLv3"
 
 import sys
@@ -121,4 +121,4 @@ def reveal(input_image_file, generator, encoding='UTF-8'):
         if len(bitab)-len(str(limit))-1 == limit :
             return "".join(bitab)[len(str(limit))+1:]
 
-  		  	 
+  		 		 
