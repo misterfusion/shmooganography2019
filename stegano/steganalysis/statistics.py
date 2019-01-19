@@ -24,7 +24,11 @@ __version__ = "$Revision: 0.1 $"
 __date__ = "$Date: 2010/10/01 $"
 __license__ = "GPLv3"
 
+import operator
+
 from PIL import Image
+from collections import Counter
+from collections import OrderedDict
 
 def steganalyse(img):
     """
@@ -32,63 +36,35 @@ def steganalyse(img):
     """
     encoded = img.copy()
     width, height = img.size
-    bits = ""
+    colours = Counter()
     for row in range(height):
         for col in range(width):
             r, g, b = img.getpixel((col, row))
-            if r % 2 == 0:
-                r = 0
-            else:
-                r = 255
-            if g % 2 == 0:
-                g = 0
-            else:
-                g = 255
-            if b % 2 == 0:
-                b = 0
-            else:
-                b = 255
-            encoded.putpixel((col, row), (r, g , b))
-    return encoded
+            colours[r] += 1
+
+    most_common = colours.most_common(10)
+    dict_colours = OrderedDict(sorted(list(colours.items()), key=lambda t: t[1]))
+
+    colours = 0
+    for colour in list(dict_colours.keys()):
+        colours += colour
+    colours = colours / len(dict_colours)
+
+    #return colours.most_common(10)
+    return list(dict_colours.keys())[:30], most_common
 
 if __name__ == '__main__':
     # Point of entry in execution mode.
-    from optparse import OptionParser
-    parser = OptionParser()
-    parser.add_option("-i", "--input", dest="input_image_file",
-                    help="Image file")
-    parser.add_option("-o", "--output", dest="output_image_file",
-                    help="Image file")
-    parser.set_defaults(input_image_file = './pictures/Lenna.png',
-                        output_image_file = './pictures/Lenna_steganalysed.png')
-    (options, args) = parser.parse_args()
+    import argparse
+    parser = argparse.ArgumentParser(prog='steganalysis-statistics')
+    parser.add_argument("-i", "--input", dest="input_image_file",
+                    help="Image file.")
+    parser.add_argument("-o", "--output", dest="output_image_file",
+                    help="Image file.")
+    arguments = parser.parse_args()
 
-    input_image_file = Image.open(options.input_image_file)
+    input_image_file = Image.open(arguments.input_image_file)
     output_image = steganalyse(input_image_file)
-    output_image.save(options.output_image_file)
+    soutput_image.save(arguments.output_image_file)
 
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
-  		 	  
-  		  		
-  			  	
-  		    
-  		    
-  		   	
-  		 	  
-  		   	
-  		  	 
-  		 		 
   		 	  
