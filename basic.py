@@ -73,4 +73,4 @@ if __name__ == '__main__':
         print reveal(img2)
     else:
         print("text too long! (don't exeed 255 characters)") 
-  		 	  
+  		   	

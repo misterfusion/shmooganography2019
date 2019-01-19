@@ -97,4 +97,4 @@ if __name__ == '__main__':
         # Test it
         img2 = Image.open(encoded_image_file)
         print reveal(img2)
-  		 	  
+  		   	
