@@ -1,9 +1,11 @@
- #!/usr/bin/python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from distutils.core import setup
 import os
 import shutil
+
+requires = ['PIL']
 
 setup(
     name='Stegano',
@@ -27,4 +29,4 @@ shutil.copymode("./bin/slsb", "/bin/slsb")
 
 shutil.copy2("./bin/steganalysis-parity", "/bin/steganalysis-parity")
 shutil.copymode("./bin/steganalysis-parity", "/bin/steganalysis-parity")
-  		  		
+  			  	
