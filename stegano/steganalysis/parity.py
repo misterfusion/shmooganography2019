@@ -51,4 +51,4 @@ def steganalyse(img):
             encoded.putpixel((col, row), (r, g , b))
     return encoded
 
-  		   	
+  		 	  
