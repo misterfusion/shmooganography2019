@@ -28,7 +28,7 @@ import sys
 
 from PIL import Image
 
-import tools
+from . import tools
 
 def hide(input_image_file, message):
     """
@@ -162,4 +162,4 @@ if __name__ == '__main__':
         else:
             print(secret)
 
-  		 	  
+  		  		
