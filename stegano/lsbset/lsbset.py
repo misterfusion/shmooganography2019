@@ -133,4 +133,4 @@ def write(image, output_image_file):
         # If hide() returns an error (Too long message).
         print(e)
 
-  		    
+  		   	
