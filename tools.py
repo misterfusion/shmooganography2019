@@ -15,4 +15,4 @@ def bs(s):
     Convert a int to its bits representation as a string of 0's and 1's.
     """
     return str(s) if s<=1 else bs(s>>1) + str(s&1)
-  		   	
+  		  	 

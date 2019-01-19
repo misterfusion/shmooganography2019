@@ -61,7 +61,7 @@ def hide(img, message):
 
 def reveal(img):
     """
-    Find a message in an encoded image (with the
+    Find a message in an image (with the
     LSB technic).
     """
     width, height = img.size
@@ -97,4 +97,4 @@ if __name__ == '__main__':
         # Test it
         img2 = Image.open(encoded_image_file)
         print reveal(img2)
-  		   	
+  		  	 
