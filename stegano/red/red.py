@@ -85,4 +85,4 @@ def reveal(input_image_file):
     img.close()
     return message
 
-  		   	
+  		 	  

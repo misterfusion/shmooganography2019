@@ -34,8 +34,7 @@ from stegano import exifHeader
 class TestEXIFHeader(unittest.TestCase):
 
     def test_hide_empty_message(self):
-        """
-        Test hiding the empty string.
+        """Test hiding the empty string.
         """
         secret = exifHeader.hide("./tests/sample-files/20160505T130442.jpg",
                                 "./image.jpg", secret_message="")
@@ -107,4 +106,4 @@ class TestEXIFHeader(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-  		   	
+  		 	  
