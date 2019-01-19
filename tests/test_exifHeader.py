@@ -91,8 +91,8 @@ class TestEXIFHeader(unittest.TestCase):
                             outputBytes,
                             secret_message=message)
 
-        clean_message = exifHeader.reveal(outputBytes)
-        self.assertEqual(message, clean_message)
+        clear_message = exifHeader.reveal(outputBytes)
+        self.assertEqual(message, clear_message)
 
     def tearDown(self):
         try:
@@ -107,4 +107,4 @@ class TestEXIFHeader(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-  		  	 
+  		 		 
