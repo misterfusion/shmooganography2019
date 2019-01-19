@@ -7,6 +7,19 @@ import shutil
 
 requires = ['PIL']
 
+
+try:
+    from setuptools import setup
+    kw = {'zip_safe': False,
+          'install_requires': requires
+          }
+except ImportError:
+    from distutils.core import setup
+    kw = {'requires': requires}
+
+
+
+
 setup(
     name='Stegano',
     version='0.4',
@@ -18,6 +31,7 @@ setup(
     platforms = ['Linux'],
     license='COPYING',
     description='A Python Steganography module.',
+    **kw
 )
 
 print "Installing binaries"
@@ -29,4 +43,5 @@ shutil.copymode("./bin/slsb", "/bin/slsb")
 
 shutil.copy2("./bin/steganalysis-parity", "/bin/steganalysis-parity")
 shutil.copymode("./bin/steganalysis-parity", "/bin/steganalysis-parity")
-  			  	
+
+  		    
